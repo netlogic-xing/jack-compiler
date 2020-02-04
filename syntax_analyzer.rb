@@ -2,15 +2,53 @@
 
 require_relative 'tokenizer'
 require_relative 'hack'
+require_relative 'symbol_table'
+class Context
+  attr_accessor :source, :vm_file
+
+  def initialize(source)
+    @context = source
+  end
+
+  def next
+    @context.next
+  end
+
+  def peek
+    @context.peek
+  end
+end
+
+class ASTNodeBase
+
+end
 # provides convention function for syntax parsing
-module ASTNode
-  def initialize(token_enumerator)
-    @source = token_enumerator
+class ASTNode < ASTNodeBase
+  attr_reader :line
+
+  def initialize(context)
+    @context = context
+    @line = context&.peek&.line_number
+  end
+
+  def end?(mark)
+    nested_mark = 1
+    ended = false
+    lambda { |token|
+      return true if ended
+
+      if token.text == mark[0]
+        nested_mark += 1
+      elsif token.text == mark[1]
+        nested_mark -= 1
+      end
+      ended = nested_mark.zero?
+    }
   end
 
   def expect_keyword(name_expr)
-    token = @source.next
-    raise "A keyword #{name_expr} is expected but #{token.text} is given in #{token.line_number}" unless token.text =~ /#{name_expr}/
+    token = @context.next
+    raise "A keyword #{name_expr} is expected but #{token.text} is given in line: #{token.line_number}" unless token.text =~ /#{name_expr}/
 
     yield(token.text) if block_given?
     token.text
@@ -19,15 +57,15 @@ module ASTNode
   end
 
   def keyword?(name_expr)
-    token = @source.peek
+    token = @context.peek
     token.text =~ /#{name_expr}/
   rescue StopIteration
     raise "#{name_expr} not found, program is malformed!"
   end
 
   def expect_identifier
-    token = @source.next
-    raise "An identifier is expected but one #{token.class} #{token.text} is given in #{token.line_number}" unless token.identifier?
+    token = @context.next
+    raise "An identifier is expected but one #{token.class} #{token.text} is given in line: #{token.line_number}" unless token.identifier?
 
     yield(token.text) if block_given?
     token.text
@@ -36,8 +74,8 @@ module ASTNode
   end
 
   def expect_string
-    token = @source.next
-    raise "A string is expected but one #{token.class} #{token.text} is given in #{token.line_number}" unless token.string_constant?
+    token = @context.next
+    raise "A string is expected but one #{token.class} #{token.text} is given in line: #{token.line_number}" unless token.string_constant?
 
     yield(token.text) if block_given?
     token.text
@@ -46,8 +84,8 @@ module ASTNode
   end
 
   def expect_integer
-    token = @source.next
-    raise "An integer is expected but one #{token.class} #{token.text} is given in #{token.line_number}" unless token.integer_constant?
+    token = @context.next
+    raise "An integer is expected but one #{token.class} #{token.text} is given in line: #{token.line_number}" unless token.integer_constant?
 
     yield(token.text) if block_given?
     token.text
@@ -56,23 +94,23 @@ module ASTNode
   end
 
   def expect_mark(name)
-    token = @source.next
-    raise "A mark #{name} is expected but #{token.text} is given in #{token.line_number}" unless token.text == name
+    token = @context.next
+    raise "A mark #{name} is expected but #{token.text} is given in line: #{token.line_number}" unless token.text == name
   rescue StopIteration
     raise "#{name} not found, program is malformed!"
   end
 
   def mark?(name)
-    token = @source.peek
+    token = @context.peek
     token.text == name
   rescue StopIteration
     raise "#{name} not found, program is malformed!"
   end
 
   def expect_var_type
-    token = @source.next
+    token = @context.next
     unless token.identifier? || token.text =~ /int|char|boolean/
-      raise "A class name or type(int, char or boolean) is expected but one #{token.class} #{token.text} is given in #{token.line_number}"
+      raise "A class name or type(int, char or boolean) is expected but one #{token.class} #{token.text} is given in line: #{token.line_number}"
     end
 
     yield(token.text) if block_given?
@@ -82,16 +120,16 @@ module ASTNode
   end
 
   def var_type?
-    token = @source.peek
+    token = @context.peek
     token.identifier? || token.text =~ /int|char|boolean/
   rescue StopIteration
     raise 'class name or type not found, program is malformed!'
   end
 
   def expect_return_type
-    token = @source.next
+    token = @context.next
     unless token.identifier? || token.text =~ /int|char|boolean|void/
-      raise "A class name or type(int, char, boolean or void) is expected but one #{token.class} #{token.text} is given in #{token.line_number}"
+      raise "A class name or type(int, char, boolean or void) is expected but one #{token.class} #{token.text} is given in line: #{token.line_number}"
     end
 
     yield(token.text) if block_given?
@@ -101,37 +139,67 @@ module ASTNode
   end
 
   def return_type?
-    token = @source.peek
+    token = @context.peek
     token.identifier? || token.text =~ /int|char|boolean|void/
   rescue StopIteration
     raise 'class name or type not found, program is malformed!'
   end
+
+  def expect_statement
+    return nil unless keyword? 'let|if|while|do|return'
+
+    statement_type = expect_keyword 'let|if|while|do|return'
+    ruby_class_name = "#{statement_type.capitalize}Statement"
+    ruby_class = Object.const_get(ruby_class_name)
+    statement_obj = ruby_class.new @context
+    statement_obj.parse
+  end
 end
 
 # presents a class of Jack language
-class JackClass
-  include ASTNode
+class JackClass < ASTNode
+  include SymbolTable
   attr_reader :class_name
 
+  def class_var_decs
+    @class_var_decs ||= []
+  end
+
+  def subroutine_decs
+    @subroutine_decs ||= []
+  end
+
   def expect_class_var_dec
-    class_var_dec = ClassVarDec.new @source
-    class_var_dec.parse
+    class_var_dec = ClassVarDec.new @context
+    return nil unless class_var_dec.parse
+
+    class_var_dec.var_list.each do |var|
+      define(var, class_var_dec.kind, class_var_dec.type)
+    end
+    class_var_dec
   end
 
   def expect_subroutine_dec
-    subroutine_dec = SubroutineDec.new @source
-    subroutine_dec.parse
+    subroutine_dec = SubroutineDec.new @context
+    $symbol_table_stack.push subroutine_dec
+    subroutine_dec = subroutine_dec.parse
+    $symbol_table_stack.pop
+    subroutine_dec.parent = self if subroutine_dec
+    subroutine_dec
   end
 
   def parse
     expect_keyword 'class'
-    expect_identifier { |id| @class_name = id }
+    expect_identifier do |id|
+      @class_name = id.to_sym
+      @table_name = class_name
+    end
     expect_mark '{'
     while (class_var_dec = expect_class_var_dec)
-      @children << class_var_dec
+      class_var_decs << class_var_dec
     end
     while (subroutine_dec = expect_subroutine_dec)
-      @children << subroutine_dec
+      subroutine_decs << subroutine_dec
     end
     expect_mark '}'
     self
@@ -139,8 +207,7 @@ class JackClass
 end
 
 # presents a class field definition
-class ClassVarDec
-  include ASTNode
+class ClassVarDec < ASTNode
   attr_reader :type, :kind
 
   def var_list
@@ -150,44 +217,56 @@ class ClassVarDec
   def parse
     return nil unless keyword? 'static|field'
 
-    expect_keyword ('static|field') { |kind| @kind = kind }
-    expect_var_type { |type| @type = type }
-    expect_identifier { |id| var_list << id }
+    expect_keyword ('static|field') { |kind| @kind = kind.to_sym }
+    expect_var_type { |type| @type = type.to_sym }
+    expect_identifier { |id| var_list << id.to_sym }
     while mark? ','
       expect_mark ','
-      expect_identifier { |id| var_list << id }
+      expect_identifier { |id| var_list << id.to_sym }
     end
     expect_mark ';'
     self
   end
 end
 
-class SubroutineDec
-  include ASTNode
+class SubroutineDec < ASTNode
+  include SymbolTable
   attr_reader :kind, :return_type, :subroutine_name, :parameter_list, :body
 
   def expect_parameter_list
-    plist = ParameterList.new @source
+    plist = ParameterList.new @context
     plist.parse
   end
 
-  def expect_subroutine_body; end
+  def expect_subroutine_body
+    body = SubroutineBody.new @context
+    body.parse
+  end
 
   def parse
     return nil unless keyword? 'constructor|function|method'
 
-    expect_keyword ('constructor|function|method') { |kind| @kind = kind }
-    expect_return_type { |type| @return_type = type }
-    expect_identifier { |id| @subroutine_name = id }
+    expect_keyword ('constructor|function|method') { |kind| @kind = kind.to_sym }
+    expect_return_type { |type| @return_type = type.to_sym }
+    expect_identifier do |id|
+      @subroutine_name = id.to_sym
+      @table_name = subroutine_name
+    end
     expect_mark '('
-    @subroutine_name = expect_parameter_list
+    @parameter_list = expect_parameter_list
+    parameter_list.each do |variable_def|
+      define(variable_def.name, :argument, variable_def.type)
+    end
     expect_mark ')'
     @body = expect_subroutine_body
+    @body.var_dec_list.each do |var_def|
+      var_def.name_list.each { |name| define(name, :local, var_def.type) }
+    end
+    self
   end
 end
 
-class SubroutineBody
-  include ASTNode
+class SubroutineBody < ASTNode
 
   def var_dec_list
     @var_dec_list ||= []
@@ -198,16 +277,8 @@ class SubroutineBody
   end
 
   def expect_var_dec
-    var_dec = VarDec.new @source
+    var_dec = VarDec.new @context
     var_dec.parse
-  end
-
-  def expect_statement
-    statement_type = expect_keyword 'let|if|while|do|return'
-    ruby_class_name = "#{statement_type.capitalize}Statement"
-    ruby_class = Object.const_get(ruby_class_name)
-    statement_obj = ruby_class.new @source
-    statement_obj.parse
   end
 
   def parse
@@ -225,22 +296,27 @@ class SubroutineBody
   end
 end
 
-class Statement
-  include ASTNode
+class Statement < ASTNode
 
   def expect_expression(mark = nil, &end_predicate)
-    expression = Expression.new @source
+    expression = Expression.new @context
     expression.parse(mark, &end_predicate)
   end
 end
 
 class LetStatement < Statement
-  attr_reader :assign_expression
+  attr_reader :var_name, :index_expression, :value_expression
 
   def parse
-    @assign_expression = expect_expression { |token| token.text == ';' }
-    raise 'No = found, expect an assign expression' unless @assign_expression.operator == Operator::EQ
-
+    @var_name = expect_identifier
+    if mark? '['
+      expect_mark '['
+      @index_expression = expect_expression('[]')
+      expect_mark ']'
+    end
+    expect_mark '='
+    @value_expression = expect_expression { |token| token.text == ';' }
+    expect_mark ';'
     self
   end
 end
@@ -253,7 +329,9 @@ class ConditionStatement < Statement
   end
 
   def parse
+    expect_mark '('
     @condition_expression = expect_expression('()')
+    expect_mark ')'
     expect_mark '{'
     while (statement = expect_statement)
       statements << statement
@@ -295,7 +373,9 @@ class DoStatement < Statement
       object_name = subroutine_name
       subroutine_name = expect_identifier
     end
-    @subroutine_call = SubroutineCall.new(subroutine_name, ExpressionList.new(@source).parse, object_name)
+    expect_mark '('
+    @subroutine_call = SubroutineCall.new(subroutine_name, ExpressionList.new(@context).parse, object_name)
+    expect_mark ')'
     expect_mark ';'
     self
   end
@@ -305,14 +385,14 @@ class ReturnStatement < Statement
   attr_reader :return_expression
 
   def parse
-    e = Expression.new @source
-    @return_expresstion = e.parse { |token| token.text == ';' }
+    e = Expression.new @context
+    @return_expression = e.parse { |token| token.text == ';' }
     expect_mark ';'
     self
   end
 end
 
-class Operator
+class Operator < ASTNodeBase
   attr_reader :op, :n, :p
 
   def initialize(op, n, p)
@@ -364,10 +444,12 @@ class Operator
   end
 end
 
-class Term
+module Term
+
 end
 
-class SimpleTerm < Term
+class SimpleTerm < ASTNodeBase
+  include Term
   attr_reader :value
 
   def initialize(value)
@@ -375,69 +457,71 @@ class SimpleTerm < Term
   end
 end
 
-class ExpressionList
-  include ASTNode
+class ExpressionList < ASTNode
 
   def expressions
     @expressions ||= []
   end
 
   def parse
-    until yield @source.peek
-      e = Expression.new @source
-      expressions << e.parse { |token| token.text == ',' }
-      expect_mark ','
+    end_predicate = end?('()')
+    ended = false
+    until ended
+      e = Expression.new @context
+      e = e.parse do |token|
+        token.text == ',' || (ended = end_predicate.call(token))
+      end
+      expressions << e if e
+      expect_mark ',' if mark? ','
     end
+    self
   end
 end
 
-class Expression < Term
-  include ASTNode
+class Expression < ASTNode
+  include Term
   attr_accessor :operator, :operands
 
-  def initialize(token_enumerator = nil)
-    super token_enumerator
+  def initialize(context = nil)
+    super context
+    @operator_stack = []
+    @operand_stack = []
   end
 
   class << self
     def create(operator, operands)
-      e = Expression.new
+      e = Expression.new @context
       e.operator = operator
-      e.operands = operands
+      e.operands = if operands.instance_of? Array
+                     operands
+                   else
+                     [operands]
+                   end
+      e
     end
-  end
-
-  def end?(mark)
-    nested_mark = 0
-    lambda { |token|
-      if token.text == mark[0]
-        nested_mark += 1
-      elsif token.text == mark[1]
-        nested_mark -= 1
-      end
-      nested_mark.zero?
-    }
   end
 
   private
 
   def push_operand(x)
-    @operand_stack ||= []
     @operand_stack.push(x)
     @last_element = :operand
   end
 
   def pop_operand(n = 1)
+    return @operand_stack.pop if n == 1
+
     @operand_stack.pop n
   end
 
   def push_operator(x)
-    @operator_stack ||= []
-    @operand_stack.push(x)
+    @operator_stack.push(x)
     @last_element = :operator
   end
 
   def pop_operator(n = 1)
+    return @operator_stack.pop if n == 1
+
     @operator_stack.pop n
   end
 
@@ -445,8 +529,9 @@ class Expression < Term
 
   def parse(mark = nil)
     @last_element = :initial
-    until block_given? ? (yield @source.peek) : end?(mark).call
-      token = @source.next
+    end_predicate = end?(mark) if mark
+    until block_given? ? (yield @context.peek) : end_predicate.call(@context.peek)
+      token = @context.next
       # process operand
       begin
         # keyword value
@@ -458,21 +543,34 @@ class Expression < Term
 
         if token.identifier?
           # array element
-          next push_operand(ArrayElement.new(token.text, Expression.new(@source).parse('[]'))) if @source.peek.text == '['
+          if @context.peek.text == '['
+            expect_mark '['
+            e = Expression.new(@context).parse('[]')
+            expect_mark ']'
+            next push_operand(ArrayElement.new(token.text, e))
+          end
           # subroutine call
-          next push_operand(SubroutineCall.new(token.text, ExpressionList.new(@source).parse)) if @source.peek.text == '('
+          if @context.peek.text == '('
+            expect_mark '('
+            expr_list = ExpressionList.new(@context).parse
+            expect_mark ')'
+            next push_operand(SubroutineCall.new(token.text, expr_list))
+          end
 
           # object method call
-          if @source.peek.text == '.'
-            subroutine_name = token.text
+          if @context.peek.text == '.'
+            object_name = token.text
             expect_mark '.'
-            object_name = expect_identifier
+            subroutine_name = expect_identifier
             raise "A pair of () are required after #{object_name}.#{subroutine_name}" unless mark? '('
 
-            next push_operand(SubroutineCall.new(subroutine_name, ExpressionList.new(@source).parse, object_name))
+            expect_mark '('
+            expr_list = ExpressionList.new(@context).parse
+            expect_mark ')'
+            next push_operand(SubroutineCall.new(subroutine_name, expr_list, object_name))
           end
           # variable
-          next next push_operand(VariableReference.new(token.text))
+          next push_operand(VariableReference.new(token.text))
         end
       end
       # process operator
@@ -487,11 +585,11 @@ class Expression < Term
           end
           pop_operator # pop ')'
         else
-          if @operator_stack.empty? || @operator_stack.last == Operator::LEFT_PARENTHESIS
+          if @operator_stack&.empty? || @operator_stack.last == Operator::LEFT_PARENTHESIS
             next push_operator Operator.get_operator(token.text, @last_element)
           end
 
-          until @operator_stack.empty? || Operator.get_operator(token.text, @last_element).p > @operator_stack.last.p
+          until @operator_stack&.empty? || Operator.get_operator(token.text, @last_element).p > @operator_stack.last.p
             operator = pop_operator
             push_operand Expression.create(operator, pop_operand(operator.n))
           end
@@ -499,11 +597,17 @@ class Expression < Term
         end
       end
     end
-    until @operator_stack.empty
+    until @operator_stack&.empty?
       operator = pop_operator
       push_operand Expression.create(operator, pop_operand(operator.n))
     end
-    @operand_stack.last
+    return nil if @operand_stack.empty?
+
+    return @operand_stack.last if @operand_stack.last.instance_of? Expression
+
+    @operands = []
+    operands << @operand_stack.last
+    self
   end
 end
 
@@ -519,7 +623,8 @@ end
 class VariableReference < SimpleTerm
 end
 
-class ArrayElement < Term
+class ArrayElement < ASTNodeBase
+  include Term
   attr_reader :var_name, :index_expression
 
   def initialize(var_name, index_expression)
@@ -528,32 +633,40 @@ class ArrayElement < Term
   end
 end
 
-class SubroutineCall < Term
+class SubroutineCall < ASTNodeBase
+  include Term
   attr_reader :object, :subroutine_name, :expression_list
 
   def initialize(subroutine_name, expression_list, object = nil)
     @object = object
-    @subroutine_name = subroutine_name
+    @subroutine_name = subroutine_name.to_sym
     @expression_list = expression_list
   end
 end
 
-class VarDec < ParameterList
-  def parse
-    return nil if keyword? 'var'
+class VarDec < ASTNode
+  attr_reader :type
 
-    values << VariableDef.new(expect_var_type, expect_identifier)
+  def name_list
+    @name_list ||= []
+  end
+
+  def parse
+    return nil unless keyword? 'var'
+
+    expect_keyword 'var'
+    @type = expect_var_type.to_sym
+    name_list << expect_identifier.to_sym
     while mark? ','
       expect_mark ','
-      values << VariableDef.new(expect_var_type, expect_identifier)
+      name_list << expect_identifier.to_sym
     end
     expect_mark ';'
     self
   end
 end
 
-class ParameterList
-  include ASTNode
+class ParameterList < ASTNode
   include Enumerable
 
   def values
@@ -581,17 +694,8 @@ class VariableDef
   attr_reader :type, :name
 
   def initialize(type, name)
-    @type = type
-    @name = name
+    @type = type.to_sym
+    @name = name.to_sym
   end
 end
 
-class SyntaxAnalyzer
-  def initialize(tokenizer)
-    @source = tokenizer.each
-  end
-
-  def parse
-    JackClass.new @source
-  end
-end

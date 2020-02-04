@@ -33,12 +33,12 @@ class Tokenizer
           end
 
           if (token = scanner.scan(Hack::Element.one_line_element))
-            yield Hack.create_element token, 1 #@file.lineno
+            yield Hack.create_element token, @file.lineno
             next
           end
 
           if (token = scanner.scan(Hack::StringConstant.pattern))
-            yield Hack::StringConstant.new token, 2 # @file.lineno
+            yield Hack::StringConstant.new token, @file.lineno
             next
           end
 

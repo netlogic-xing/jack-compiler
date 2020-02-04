@@ -10,17 +10,17 @@ module Hack
   class << self
     def create_element(text, line_number)
       case text
-      when /(?<keyword>class|constructor|function|method|field|static|var
+      when /^(?<keyword>class|constructor|function|method|field|static|var
                           |int|char|boolean|void|true|false|null|this|let|do
-                          |if|else|while|return)/x
+                          |if|else|while|return)$/x
         Keyword.new text, line_number
-      when /(?<mark>[\{\}\(\)\[\]\.,;\+\-\*\/&\|\<\>=~])/
+      when /^(?<mark>[\{\}\(\)\[\]\.,;\+\-\*\/&\|\<\>=~])$/
         Mark.new text, line_number
-      when /(?<integer>\d{1,5})/
+      when /^(?<integer>\d{1,5})$/
         IntegerConstant.new text, line_number
-      when /(?<string>"\.*")/
+      when /^(?<string>"\.*")$/
         StringConstant.new text, line_number
-      when /(?<identifier>[a-zA-Z_][\d\w_]*)/
+      when /^(?<identifier>[a-zA-Z_][\d\w_]*)$/
         Identifier.new text, line_number
       else
         raise "Unrecognized token #{text}"
@@ -43,7 +43,7 @@ module Hack
     %w[Keyword Mark IntegerConstant StringConstant Identifier].each do |name|
       method_name_main = name.sub(/([a-z])([A-Z])/) { "#{$1}_#{$2.downcase}" }.downcase
       define_method("#{method_name_main}?") do
-        return self.class.name == name
+        return self.class.name.end_with? name
       end
     end
 
