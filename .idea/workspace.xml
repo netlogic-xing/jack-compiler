@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3c91107-1fe0-462c-aa0d-87187b1bbffe" name="Default Changelist" comment="o">
-      <change afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/symbol_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vm_writer.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.MD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/The Elements of Computing Systems.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/计算机系统要素：从零开始构建现代计算机.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/JackCompiler.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/JackCompiler.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compiler.rb" beforeDir="false" afterPath="$PROJECT_DIR$/compiler.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hack.rb" beforeDir="false" afterPath="$PROJECT_DIR$/hack.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/syntax_analyzer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/syntax_analyzer.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tokenizer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/tokenizer.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xml_writer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/xml_writer.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +31,6 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -48,6 +39,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.ruby.settings.RubyActiveModuleSdkConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -65,11 +57,12 @@
       <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
       <EXTENSION ID="JRubyRunConfigurationExtension" NailgunExecEnabled="false" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" track_test_folders="true" runner="rcov">
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" track_test_folders="true" runner="rcov" ENABLE_FORKED_COVERAGE="true">
         <COVERAGE_PATTERN ENABLED="true">
           <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
         </COVERAGE_PATTERN>
       </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$MODULE_DIR$/compiler.rb" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="$USER_HOME$/nand2tetris/projects/11/Pong" />
       <method v="2" />
@@ -83,11 +76,12 @@
       <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
       <EXTENSION ID="JRubyRunConfigurationExtension" NailgunExecEnabled="false" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" track_test_folders="true" runner="rcov">
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" track_test_folders="true" runner="rcov" ENABLE_FORKED_COVERAGE="true">
         <COVERAGE_PATTERN ENABLED="true">
           <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
         </COVERAGE_PATTERN>
       </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$MODULE_DIR$/expression.rb" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
       <method v="2" />
@@ -101,11 +95,12 @@
       <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
       <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
       <EXTENSION ID="JRubyRunConfigurationExtension" NailgunExecEnabled="false" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" track_test_folders="true" runner="rcov">
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" track_test_folders="true" runner="rcov" ENABLE_FORKED_COVERAGE="true">
         <COVERAGE_PATTERN ENABLED="true">
           <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
         </COVERAGE_PATTERN>
       </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$MODULE_DIR$/preexpression.rb" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
       <method v="2" />
@@ -135,6 +130,7 @@
       </list>
     </option>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SpringUtil" SPRING_PRE_LOADER_OPTION="true" RAKE_SPRING_PRE_LOADER_OPTION="true" RAILS_SPRING_PRE_LOADER_OPTION="true" />
   <component name="SvnConfiguration">
     <configuration />
@@ -173,167 +169,52 @@
       <workItem from="1580049508226" duration="361000" />
       <workItem from="1580050324884" duration="13661000" />
       <workItem from="1580102564426" duration="29242000" />
-      <workItem from="1580390872460" duration="41874000" />
+      <workItem from="1580390872460" duration="44467000" />
+      <workItem from="1582004641729" duration="265000" />
+      <workItem from="1582865529126" duration="15000" />
+      <workItem from="1586830540300" duration="104000" />
+      <workItem from="1601010896952" duration="11000" />
+      <workItem from="1614319253618" duration="26000" />
+      <workItem from="1624798339507" duration="1121000" />
     </task>
+    <task id="LOCAL-00001" summary="#=&gt;//">
+      <created>1624798891445</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1624798891445</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.vm" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="184" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580795467004">
-      <screen x="0" y="23" width="1440" height="798" />
-    </state>
-    <state x="183" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.773@0.23.1440.773" timestamp="1580138224833" />
-    <state x="184" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.779@0.23.1440.779" timestamp="1580049596375" />
-    <state x="184" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.783@0.23.1440.783" timestamp="1580564000226" />
-    <state x="184" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.798@0.23.1440.798" timestamp="1580795467004" />
-    <state x="184" y="72" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.801@0.23.1440.801" timestamp="1580742115372" />
-    <state x="438" y="218" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1578758088591">
-      <screen x="0" y="23" width="1440" height="783" />
-    </state>
-    <state x="438" y="218" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.783@0.23.1440.783" timestamp="1578758088591" />
-    <state x="438" y="222" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.798@0.23.1440.798" timestamp="1578484310048" />
-    <state x="254" y="82" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1578924826213">
-      <screen x="0" y="23" width="1440" height="779" />
-    </state>
-    <state x="254" y="82" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/0.23.1440.779@0.23.1440.779" timestamp="1578924826213" />
-    <state x="826" y="177" width="572" height="579" key="#xdebugger.evaluate" timestamp="1580795637059">
-      <screen x="0" y="23" width="1440" height="798" />
-    </state>
-    <state x="425" y="208" width="908" height="588" key="#xdebugger.evaluate/0.23.1440.773@0.23.1440.773" timestamp="1580109684951" />
-    <state x="425" y="209" key="#xdebugger.evaluate/0.23.1440.779@0.23.1440.779" timestamp="1580306728683" />
-    <state x="614" y="227" key="#xdebugger.evaluate/0.23.1440.783@0.23.1440.783" timestamp="1580565583533" />
-    <state x="483" y="120" key="#xdebugger.evaluate/0.23.1440.788@0.23.1440.788" timestamp="1578756665636" />
-    <state x="826" y="177" key="#xdebugger.evaluate/0.23.1440.798@0.23.1440.798" timestamp="1580795637059" />
-    <state x="532" y="222" width="572" height="579" key="#xdebugger.evaluate/0.23.1440.801@0.23.1440.801" timestamp="1580742261034" />
-    <state x="303" y="23" key="CommitChangelistDialog2" timestamp="1580093849370">
-      <screen x="0" y="23" width="1440" height="773" />
-    </state>
-    <state x="303" y="23" key="CommitChangelistDialog2/0.23.1440.773@0.23.1440.773" timestamp="1580093849370" />
-    <state x="100" y="123" width="1240" height="573" key="DiffContextDialog" timestamp="1580098577472">
-      <screen x="0" y="23" width="1440" height="773" />
-    </state>
-    <state x="100" y="123" width="1240" height="573" key="DiffContextDialog/0.23.1440.773@0.23.1440.773" timestamp="1580098577472" />
-    <state width="1396" height="232" key="GridCell.Tab.0.bottom" timestamp="1580795778624">
-      <screen x="0" y="23" width="1440" height="798" />
-    </state>
-    <state width="1396" height="145" key="GridCell.Tab.0.bottom/0.23.1440.773@0.23.1440.773" timestamp="1580179731284" />
-    <state width="1396" height="47" key="GridCell.Tab.0.bottom/0.23.1440.779@0.23.1440.779" timestamp="1580307254799" />
-    <state width="1396" height="282" key="GridCell.Tab.0.bottom/0.23.1440.783@0.23.1440.783" timestamp="1580568197703" />
-    <state width="1396" height="91" key="GridCell.Tab.0.bottom/0.23.1440.788@0.23.1440.788" timestamp="1579354138833" />
-    <state width="1398" height="146" key="GridCell.Tab.0.bottom/0.23.1440.795@0.23.1440.795" timestamp="1578616357567" />
-    <state width="1396" height="232" key="GridCell.Tab.0.bottom/0.23.1440.798@0.23.1440.798" timestamp="1580795778624" />
-    <state width="1396" height="232" key="GridCell.Tab.0.bottom/0.23.1440.801@0.23.1440.801" timestamp="1580742116978" />
-    <state width="1396" height="232" key="GridCell.Tab.0.center" timestamp="1580795778624">
-      <screen x="0" y="23" width="1440" height="798" />
-    </state>
-    <state width="1396" height="145" key="GridCell.Tab.0.center/0.23.1440.773@0.23.1440.773" timestamp="1580179731282" />
-    <state width="1396" height="47" key="GridCell.Tab.0.center/0.23.1440.779@0.23.1440.779" timestamp="1580307254798" />
-    <state width="1396" height="282" key="GridCell.Tab.0.center/0.23.1440.783@0.23.1440.783" timestamp="1580568197702" />
-    <state width="1396" height="91" key="GridCell.Tab.0.center/0.23.1440.788@0.23.1440.788" timestamp="1579354138832" />
-    <state width="1398" height="146" key="GridCell.Tab.0.center/0.23.1440.795@0.23.1440.795" timestamp="1578616357566" />
-    <state width="1396" height="232" key="GridCell.Tab.0.center/0.23.1440.798@0.23.1440.798" timestamp="1580795778624" />
-    <state width="1396" height="232" key="GridCell.Tab.0.center/0.23.1440.801@0.23.1440.801" timestamp="1580742116976" />
-    <state width="1396" height="232" key="GridCell.Tab.0.left" timestamp="1580795778623">
-      <screen x="0" y="23" width="1440" height="798" />
-    </state>
-    <state width="1396" height="145" key="GridCell.Tab.0.left/0.23.1440.773@0.23.1440.773" timestamp="1580179731282" />
-    <state width="1396" height="47" key="GridCell.Tab.0.left/0.23.1440.779@0.23.1440.779" timestamp="1580307254798" />
-    <state width="1396" height="282" key="GridCell.Tab.0.left/0.23.1440.783@0.23.1440.783" timestamp="1580568197702" />
-    <state width="1396" height="91" key="GridCell.Tab.0.left/0.23.1440.788@0.23.1440.788" timestamp="1579354138832" />
-    <state width="1398" height="146" key="GridCell.Tab.0.left/0.23.1440.795@0.23.1440.795" timestamp="1578616357565" />
-    <state width="1396" height="232" key="GridCell.Tab.0.left/0.23.1440.798@0.23.1440.798" timestamp="1580795778623" />
-    <state width="1396" height="232" key="GridCell.Tab.0.left/0.23.1440.801@0.23.1440.801" timestamp="1580742116975" />
-    <state width="1396" height="232" key="GridCell.Tab.0.right" timestamp="1580795778624">
-      <screen x="0" y="23" width="1440" height="798" />
-    </state>
-    <state width="1396" height="145" key="GridCell.Tab.0.right/0.23.1440.773@0.23.1440.773" timestamp="1580179731283" />
-    <state width="1396" height="47" key="GridCell.Tab.0.right/0.23.1440.779@0.23.1440.779" timestamp="1580307254799" />
-    <state width="1396" height="282" key="GridCell.Tab.0.right/0.23.1440.783@0.23.1440.783" timestamp="1580568197703" />
-    <state width="1396" height="91" key="GridCell.Tab.0.right/0.23.1440.788@0.23.1440.788" timestamp="1579354138833" />
-    <state width="1398" height="146" key="GridCell.Tab.0.right/0.23.1440.795@0.23.1440.795" timestamp="1578616357566" />
-    <state width="1396" height="232" key="GridCell.Tab.0.right/0.23.1440.798@0.23.1440.798" timestamp="1580795778624" />
-    <state width="1396" height="232" key="GridCell.Tab.0.right/0.23.1440.801@0.23.1440.801" timestamp="1580742116978" />
-    <state width="1396" height="232" key="GridCell.Tab.1.bottom" timestamp="1580795778625">
-      <screen x="0" y="23" width="1440" height="798" />
-    </state>
-    <state width="1396" height="100" key="GridCell.Tab.1.bottom/0.23.1440.773@0.23.1440.773" timestamp="1580138165706" />
-    <state width="1396" height="265" key="GridCell.Tab.1.bottom/0.23.1440.779@0.23.1440.779" timestamp="1580306796080" />
-    <state width="1396" height="47" key="GridCell.Tab.1.bottom/0.23.1440.783@0.23.1440.783" timestamp="1580567663397" />
-    <state width="1398" height="244" key="GridCell.Tab.1.bottom/0.23.1440.788@0.23.1440.788" timestamp="1578756537700" />
-    <state width="1396" height="232" key="GridCell.Tab.1.bottom/0.23.1440.798@0.23.1440.798" timestamp="1580795778625" />
-    <state width="1396" height="232" key="GridCell.Tab.1.bottom/0.23.1440.801@0.23.1440.801" timestamp="1580742117816" />
-    <state width="1396" height="232" key="GridCell.Tab.1.center" timestamp="1580795778625">
-      <screen x="0" y="23" width="1440" height="798" />
-    </state>
-    <state width="1396" height="100" key="GridCell.Tab.1.center/0.23.1440.773@0.23.1440.773" timestamp="1580138165704" />
-    <state width="1396" height="265" key="GridCell.Tab.1.center/0.23.1440.779@0.23.1440.779" timestamp="1580306796080" />
-    <state width="1396" height="47" key="GridCell.Tab.1.center/0.23.1440.783@0.23.1440.783" timestamp="1580567663396" />
-    <state width="1398" height="244" key="GridCell.Tab.1.center/0.23.1440.788@0.23.1440.788" timestamp="1578756537697" />
-    <state width="1396" height="232" key="GridCell.Tab.1.center/0.23.1440.798@0.23.1440.798" timestamp="1580795778625" />
-    <state width="1396" height="232" key="GridCell.Tab.1.center/0.23.1440.801@0.23.1440.801" timestamp="1580742117815" />
-    <state width="1396" height="232" key="GridCell.Tab.1.left" timestamp="1580795778625">
-      <screen x="0" y="23" width="1440" height="798" />
-    </state>
-    <state width="1396" height="100" key="GridCell.Tab.1.left/0.23.1440.773@0.23.1440.773" timestamp="1580138165703" />
-    <state width="1396" height="265" key="GridCell.Tab.1.left/0.23.1440.779@0.23.1440.779" timestamp="1580306796080" />
-    <state width="1396" height="47" key="GridCell.Tab.1.left/0.23.1440.783@0.23.1440.783" timestamp="1580567663396" />
-    <state width="1398" height="244" key="GridCell.Tab.1.left/0.23.1440.788@0.23.1440.788" timestamp="1578756537696" />
-    <state width="1396" height="232" key="GridCell.Tab.1.left/0.23.1440.798@0.23.1440.798" timestamp="1580795778625" />
-    <state width="1396" height="232" key="GridCell.Tab.1.left/0.23.1440.801@0.23.1440.801" timestamp="1580742117815" />
-    <state width="1396" height="232" key="GridCell.Tab.1.right" timestamp="1580795778625">
-      <screen x="0" y="23" width="1440" height="798" />
-    </state>
-    <state width="1396" height="100" key="GridCell.Tab.1.right/0.23.1440.773@0.23.1440.773" timestamp="1580138165705" />
-    <state width="1396" height="265" key="GridCell.Tab.1.right/0.23.1440.779@0.23.1440.779" timestamp="1580306796080" />
-    <state width="1396" height="47" key="GridCell.Tab.1.right/0.23.1440.783@0.23.1440.783" timestamp="1580567663397" />
-    <state width="1398" height="244" key="GridCell.Tab.1.right/0.23.1440.788@0.23.1440.788" timestamp="1578756537699" />
-    <state width="1396" height="232" key="GridCell.Tab.1.right/0.23.1440.798@0.23.1440.798" timestamp="1580795778625" />
-    <state width="1396" height="232" key="GridCell.Tab.1.right/0.23.1440.801@0.23.1440.801" timestamp="1580742117815" />
-    <state x="758" y="147" key="ReplaceDuplicatesPrompt" timestamp="1579273032187">
-      <screen x="0" y="23" width="1440" height="773" />
-    </state>
-    <state x="758" y="147" key="ReplaceDuplicatesPrompt/0.23.1440.773@0.23.1440.773" timestamp="1579273032187" />
-    <state x="221" y="48" key="SettingsEditor" timestamp="1580049738330">
-      <screen x="0" y="23" width="1440" height="779" />
-    </state>
-    <state x="221" y="48" key="SettingsEditor/0.23.1440.779@0.23.1440.779" timestamp="1580049738330" />
-    <state x="221" y="48" key="SettingsEditor/0.23.1440.788@0.23.1440.788" timestamp="1578756534080" />
-    <state width="720" height="386" key="XDebugger.FullValuePopup" timestamp="1580105735634">
-      <screen x="0" y="23" width="1440" height="773" />
-    </state>
-    <state width="720" height="386" key="XDebugger.FullValuePopup/0.23.1440.773@0.23.1440.773" timestamp="1580105735634" />
-    <state x="378" y="31" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1580095830751">
-      <screen x="0" y="23" width="1440" height="773" />
-    </state>
-    <state x="378" y="31" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1440.773@0.23.1440.773" timestamp="1580095830751" />
-    <state x="268" y="153" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1580305957155">
-      <screen x="0" y="23" width="1440" height="779" />
-    </state>
-    <state x="268" y="152" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1440.773@0.23.1440.773" timestamp="1580137309636" />
-    <state x="268" y="153" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1440.779@0.23.1440.779" timestamp="1580305957155" />
-    <state x="213" y="232" width="955" height="569" key="dock-window-1" timestamp="1580700484150">
-      <screen x="0" y="23" width="1440" height="798" />
-    </state>
-    <state x="0" y="23" width="955" height="569" key="dock-window-1/0.23.1440.779@0.23.1440.779" timestamp="1580390960301" />
-    <state x="213" y="232" width="955" height="569" key="dock-window-1/0.23.1440.798@0.23.1440.798" timestamp="1580700484150" />
-    <state x="385" y="134" width="670" height="672" key="search.everywhere.popup" timestamp="1580566493298">
-      <screen x="0" y="23" width="1440" height="783" />
-    </state>
-    <state x="385" y="133" width="670" height="669" key="search.everywhere.popup/0.23.1440.779@0.23.1440.779" timestamp="1580445636485" />
-    <state x="385" y="134" width="670" height="672" key="search.everywhere.popup/0.23.1440.783@0.23.1440.783" timestamp="1580566493298" />
-    <state x="385" y="135" width="670" height="676" key="search.everywhere.popup/0.23.1440.788@0.23.1440.788" timestamp="1578756457787" />
+    <MESSAGE value="#=&gt;//" />
+    <option name="LAST_COMMIT_MESSAGE" value="#=&gt;//" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/vm_writer.rb</url>
-          <line>231</line>
+          <line>233</line>
           <properties myBlockOrdinal="-1">
             <option name="block-ordinal" value="-1" />
           </properties>
@@ -357,8 +238,8 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/JackCompiler@expression.rcov" NAME="expression Coverage Results" MODIFIED="1579353898102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="JackCompiler" />
     <SUITE FILE_PATH="coverage/JackCompiler@preexpression.rcov" NAME="preexpression Coverage Results" MODIFIED="1579182460891" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="JackCompiler" />
+    <SUITE FILE_PATH="coverage/JackCompiler@expression.rcov" NAME="expression Coverage Results" MODIFIED="1579353898102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="JackCompiler" />
     <SUITE FILE_PATH="coverage/JackCompiler@compiler.rcov" NAME="compiler Coverage Results" MODIFIED="1580795727426" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="JackCompiler" />
   </component>
 </project>
