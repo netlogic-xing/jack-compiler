@@ -89,24 +89,24 @@ end
 
 class LetStatement
   def write_vm_code
-    vm_file.puts "#Let begin #{var_name}"
+    vm_file.puts "// Let begin #{var_name}"
     symbol = $symbol_table_stack.last[var_name]
     puts "#{var_name} #{$symbol_table_stack.last.table_name}" unless symbol
     segment = symbol.kind
     segment = :this if segment == :field
     if index_expression
+      value_expression.write_vm_code
       push segment, symbol.index
       index_expression.write_vm_code
       add
       pop :pointer, 1
-      value_expression.write_vm_code
-      pop :that, 0
-      vm_file.puts "#Let end array element"
+      pop :that, 0 # assign to a[i]
+      vm_file.puts "// Let end array element"
       return
     end
     value_expression.write_vm_code
     pop segment, symbol.index
-    vm_file.puts "#Let end"
+    vm_file.puts "// Let end"
   end
 end
 
@@ -199,6 +199,7 @@ end
 
 class ArrayElement
   def write_vm_code
+    vm_file.puts "// begin #{var_name}"
     symbol = $symbol_table_stack.last[var_name]
     raise "Unknown variable #{var_name} in #{$symbol_table_stack.last.table_name}" unless symbol
 
@@ -209,6 +210,7 @@ class ArrayElement
     add
     pop :pointer, 1
     push :that, 0
+    vm_file.puts "// end #{var_name}"
   end
 end
 
